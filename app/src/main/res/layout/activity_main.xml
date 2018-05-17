@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jjoey.freshkutz.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:background="@color/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/helpTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:textAllCaps="false"
+                android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:textColor="@android:color/white"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Haircuts"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <com.jjoey.freshkutz.utils.EmptyRecyclerView
+        android:id="@+id/savedHairStyleRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"/>
+
+    <TextView
+        android:id="@+id/emptyState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click The Add Button to Start Adding Your Styles"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="monospace"
+        android:textSize="18sp"
+        android:layout_margin="20dp"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

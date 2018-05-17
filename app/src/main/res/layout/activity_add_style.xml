@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c2c2c2"
+    tools:context="com.jjoey.freshkutz.AddStyleActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/cancelTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stageTV"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/infoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/orange_bkg"
+        android:layout_below="@id/toolbar"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:src="@drawable/exclamation" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/ask_stylist"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@id/infoLayout">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/mainLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/style_name_hint"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        android:id="@+id/captionET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:hint="@string/caption_style_hint"
+                        android:textColor="@color/colorAccent"
+                        android:background="@null"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:maxLength="60"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/salon_name_tv"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        android:id="@+id/salonET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:hint="@string/salon_name_hint"
+                        android:textColor="@color/colorAccent"
+                        android:background="@null"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:maxLength="60"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/date_haircut_hint"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"/>
+
+                    <EditText
+                        android:id="@+id/dateET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:hint="@string/date_hint"
+                        android:textColor="@color/colorAccent"
+                        android:background="@null"
+                        android:inputType="date"
+                        android:maxLines="1"
+                        android:maxLength="60"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/headshots_hint"
+                        android:textSize="18sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="5dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="5dp">
+
+                        <RelativeLayout
+                            android:id="@+id/frontLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/frontIV"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/border_image_bkg"
+                                android:src="@drawable/ic_hair_tools"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/front_facing"
+                                android:textColor="#c2c2c2"
+                                android:textSize="18sp"
+                                android:layout_below="@id/frontIV"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="5dp"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/sideLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/frontLayout"
+                            android:layout_marginLeft="16dp">
+
+                            <ImageView
+                                android:id="@+id/sideIV"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/border_image_bkg"
+                                android:src="@drawable/ic_hair_tools"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/side_facing"
+                                android:textColor="#c2c2c2"
+                                android:textSize="18sp"
+                                android:layout_below="@id/sideIV"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="5dp"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/backLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/sideLayout"
+                            android:layout_marginLeft="16dp">
+
+                            <ImageView
+                                android:id="@+id/backIV"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/border_image_bkg"
+                                android:src="@drawable/ic_hair_tools"
+                                android:scaleType="centerCrop"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/back_facing"
+                                android:textColor="#c2c2c2"
+                                android:textSize="18sp"
+                                android:layout_below="@id/backIV"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="5dp"/>
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/descET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="50dp"
+                        android:hint="@string/desc_style_hint"
+                        android:textColor="@color/colorAccent"
+                        android:background="@null"
+                        android:inputType="text|textMultiLine|textShortMessage|textCapWords|textCapSentences"
+                        android:maxLines="10" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/progressTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_below="@+id/mainLayout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"/>
+
+            <Button
+                android:id="@+id/continueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save_n_continue"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif-condensed"
+                android:background="@drawable/continue_btn_bkg"
+                android:layout_below="@id/progressTV"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
