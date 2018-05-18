@@ -6,7 +6,7 @@
     <string name="cancel">Cancel</string>
     <string name="stageTV">Create Haircut | 1 of 2</string>
     <string name="ask_stylist">Ask your STYLIST nicely to fill this page out</string>
-    <string name="style_name_hint">Hair Style Name:</string>
+    <string name="style_name_hint">Hair Style Name</string>
     <string name="headshots_hint">Take Headshots</string>
     <string name="front_facing">Front</string>
     <string name="side_facing">Side</string>
@@ -16,11 +16,19 @@
     <string name="final_stageTV">Preview Haircut | 2 of 2</string>
     <string name="select_cover_image">Select One of Your Images as Cover Image</string>
     <string name="caption_style_hint">Type here...</string>
-    <string name="desc_style_hint">Enter More Description...(Optional)</string>
+    <string name="desc_style_hint">Enter Style Description</string>
     <string name="date_hint">Choose Date</string>
     <string name="salon_name_hint">Enter Only Salon Name</string>
     <string name="date_haircut_hint">Date of Haircut</string>
-    <string name="salon_name_tv">Salon Name:</string>
+    <string name="salon_name_tv">Salon Name</string>
     <string name="full_details_txt">Full Details Mode</string>
     <string name="edit_details_txt">Edit</string>
+    <string name="details_style_name">Name of Haircut</string>
+    <string name="details_headshots">Headshots</string>
+    <string name="details_style_desc">Haircut Description</string>
+    <string name="details_stylist_name">Hair Stylist\'s Name</string>
+    <string name="details_style_date">Date of Haircut</string>
+    <string name="details_salon_city">Salon Name</string>
+    <string name="edit_txt">Edit Mode</string>
+    <string name="cancel_edit_txt">Cancel</string>
 </resources>

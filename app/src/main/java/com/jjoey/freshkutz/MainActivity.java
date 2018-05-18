@@ -1,8 +1,9 @@
 package com.jjoey.freshkutz;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -10,11 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.activeandroid.query.Select;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.jjoey.freshkutz.adapters.StylesAdapter;
 import com.jjoey.freshkutz.models.FreshKutz;
 import com.jjoey.freshkutz.utils.EmptyRecyclerView;
-import com.jjoey.freshkutz.utils.SharedPrefsHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private StylesAdapter adapter;
     private List<FreshKutz> list = new ArrayList<>();
 
-    private SharedPrefsHelper prefsHelper;
-
     private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
@@ -40,15 +39,13 @@ public class MainActivity extends AppCompatActivity {
         initViews();
         setSupportActionBar(toolbar);
 
-        prefsHelper = new SharedPrefsHelper(this);
-
         savedHairStyleRV.setEmptyView(emptyState);
 
         helpTV.setOnClickListener( v -> {
             // TODO: 5/9/2018 show help to use app
         });
 
-        //setUpLists();
+        setUpLists();
 
     }
 
@@ -57,24 +54,20 @@ public class MainActivity extends AppCompatActivity {
         savedHairStyleRV.setLayoutManager(llm);
         savedHairStyleRV.setHasFixedSize(true);
 
-        FreshKutz kutz = new FreshKutz();
-
-        String title = prefsHelper.getStyleTitle();
-        String date = prefsHelper.getDateCut();
-        String salonName = prefsHelper.getSalonName();
-        String coverImg = prefsHelper.getCoverImage();
-
-        kutz.setCoverImage(coverImg);
-        kutz.setTitle(title);
-        kutz.setSalon_City(salonName);
-        kutz.setDate(date);
-        kutz.setCoverImage(coverImg);
-
-        list.add(kutz);
+        list = getList();
 
         adapter = new StylesAdapter(this, list);
         savedHairStyleRV.setAdapter(adapter);
+        savedHairStyleRV.setItemAnimator(new DefaultItemAnimator());
+        adapter.notifyDataSetChanged();
 
+    }
+
+    public List<FreshKutz> getList() {
+        return new Select()
+                .from(FreshKutz.class)
+                .orderBy("id ASC")
+                .execute();
     }
 
     @Override

@@ -13,6 +13,6 @@ public class FreshApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ActiveAndroid.initialize(this, true);
+        ActiveAndroid.initialize(this);
     }
 }

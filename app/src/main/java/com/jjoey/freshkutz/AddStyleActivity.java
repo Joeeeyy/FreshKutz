@@ -20,23 +20,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.jjoey.freshkutz.db.HairDB;
 import com.jjoey.freshkutz.models.FreshKutz;
-import com.jjoey.freshkutz.utils.SharedPrefsHelper;
 import com.jjoey.freshkutz.utils.Utils;
 
-import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class AddStyleActivity extends AppCompatActivity {
 
@@ -45,12 +41,11 @@ public class AddStyleActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TextView cancelTV;
 
-    private EditText captionET, salonET, dateET, descET;
+    private EditText captionET, salonET, descET, stylist_nameET;
     private ImageView frontIV, sideIV, backIV;
     private Button continueBtn;
 
-    private String title, salon, date, description;
-    private boolean isFrontImg = false, isBackImg = false, isSideImg = false;
+    private String title, salon, description, stylistName;
 
     private static final int FRONT_CODE = 200;
     private static final int SIDE_CODE = 201;
@@ -59,29 +54,21 @@ public class AddStyleActivity extends AppCompatActivity {
 
     private FreshKutz freshKutz;
     private String frontBase64Image, sideBase64Image, backBase64Image;
+    private boolean isFrontImg = false, isBackImg = false, isSideImg = false, isGranted = false;
 
-    private boolean isGranted = false;
-
-    private SharedPrefsHelper prefsHelper;
-    private HairDB database;
+    private String curr_id;
+    private long kutz_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefsHelper = new SharedPrefsHelper(this);
         setContentView(R.layout.activity_add_style);
 
-        String path = getFilesDir().getPath();
-        Log.d(TAG, "Files Dir:\t" + path);
-
-//        String uid = UUID.randomUUID().toString();
-//        Log.d(TAG, "UUID:\t" + uid);
-
         freshKutz = new FreshKutz();
+
         init();
         setSupportActionBar(toolbar);
 
-        database = new HairDB(this);
         freshKutz = new FreshKutz();
 
         cancelTV.setOnClickListener(v -> {
@@ -100,11 +87,7 @@ public class AddStyleActivity extends AppCompatActivity {
                 Log.d(TAG, "isFrontImage");
                 isBackImg = false;
                 isSideImg = false;
-                if (isGranted == true){
-                    showChooserDialog();
-                } else {
-                    showSnack();
-                }
+                showChooserDialog();
             }
         });
 
@@ -120,11 +103,7 @@ public class AddStyleActivity extends AppCompatActivity {
                 Log.d(TAG, "isSideImage");
                 isBackImg = false;
                 isFrontImg = false;
-                if (isGranted == true){
-                    showChooserDialog();
-                } else {
-                    showSnack();
-                }
+                showChooserDialog();
             }
         });
 
@@ -140,11 +119,7 @@ public class AddStyleActivity extends AppCompatActivity {
                 isSideImg = false;
                 isFrontImg = false;
                 Log.d(TAG, "isBackImage");
-                if (isGranted == true){
-                    showChooserDialog();
-                } else {
-                    showSnack();
-                }
+                showChooserDialog();
             }
         });
 
@@ -228,12 +203,22 @@ public class AddStyleActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (items[i].equals("Open From Camera")) {
-                    if (isFrontImg && isGranted) {
-                        launchCamera(FRONT_CODE);
-                    } else if (isSideImg && isGranted) {
-                        launchCamera(SIDE_CODE);
-                    } else if (isBackImg && isGranted) {
-                        launchCamera(BACK_CODE);
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        if (isFrontImg && isGranted) {
+                            launchCamera(FRONT_CODE);
+                        } else if (isSideImg && isGranted) {
+                            launchCamera(SIDE_CODE);
+                        } else if (isBackImg && isGranted) {
+                            launchCamera(BACK_CODE);
+                        }
+                    } else {
+                        if (isFrontImg) {
+                            launchCamera(FRONT_CODE);
+                        } else if (isSideImg) {
+                            launchCamera(SIDE_CODE);
+                        } else if (isBackImg) {
+                            launchCamera(BACK_CODE);
+                        }
                     }
                 }
             }
@@ -256,7 +241,6 @@ public class AddStyleActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     frontBase64Image = Utils.bitmapToBase64String(bitmap);
-//                    prefsHelper.saveFrontImage(frontBase64Image);
                     Bitmap bitmap_front = Utils.base64StringToBitmap(frontBase64Image);
                     frontIV.setImageBitmap(bitmap_front);
                 }
@@ -265,7 +249,6 @@ public class AddStyleActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     sideBase64Image = Utils.bitmapToBase64String(bitmap);
-//                    prefsHelper.saveSideImage(sideBase64Image);
                     Bitmap bitmap_side = Utils.base64StringToBitmap(sideBase64Image);
                     sideIV.setImageBitmap(bitmap_side);
                 }
@@ -274,7 +257,6 @@ public class AddStyleActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Bitmap bitmap = (Bitmap) data.getExtras().get("data");
                     backBase64Image = Utils.bitmapToBase64String(bitmap);
-//                    prefsHelper.saveBackImage(backBase64Image);
                     Bitmap bitmap_back = Utils.base64StringToBitmap(backBase64Image);
                     backIV.setImageBitmap(bitmap_back);
                 }
@@ -287,83 +269,57 @@ public class AddStyleActivity extends AppCompatActivity {
 
         title = captionET.getText().toString();
         salon = salonET.getText().toString();
-        date = dateET.getText().toString();
         description = descET.getText().toString();
+        stylistName = stylist_nameET.getText().toString();
 
-        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(salon) && !TextUtils.isEmpty(date) && frontBase64Image != null && sideBase64Image != null) {
+        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(salon) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(stylistName) && frontBase64Image != null && sideBase64Image != null && backBase64Image != null ) {
             Log.d(TAG, "Null Check Success");
-            Intent intent = new Intent(AddStyleActivity.this, PreviewStyleActivity.class);
-//            prefsHelper.saveTitle(title);
-//            prefsHelper.saveDescription(description);
-//            prefsHelper.saveSalonName(salon);
-//            prefsHelper.saveDateCut(date);
+            //Intent intent = new Intent(AddStyleActivity.this, PreviewStyleActivity.class);
+            Intent intent = new Intent(AddStyleActivity.this, MainActivity.class);
 
             if (frontBase64Image != null && backBase64Image != null && sideBase64Image != null) {
-                freshKutz.setFrontImage(frontBase64Image);
-                freshKutz.setSideImage(sideBase64Image);
-                freshKutz.setBackImage(backBase64Image);
+                freshKutz.frontImage = frontBase64Image;
+                freshKutz.backImage = backBase64Image;
+                freshKutz.sideImage = sideBase64Image;
             }
 
-            freshKutz.setTitle(title);
-            freshKutz.setSalon_City(salon);
-            freshKutz.setDescription(description);
+            curr_id = UUID.randomUUID().toString();
+            Log.d(TAG, "Curr id:\t" + curr_id);
 
-            if (date != null) {
-                freshKutz.setDate(date);
-            } else {
-                freshKutz.setDate(DateFormat.getDateTimeInstance().format(new Date()));
-            }
-            //boolean result = database.addNewStyle(freshKutz);
-            if (database.addNewStyle(freshKutz)) {
-                Log.d(TAG, "Single id:\t" + freshKutz.getFreshKutzId());
-                Log.d(TAG, "Save Success");
-            } else {
-                Log.d(TAG, "Save Failed");
-            }
+            freshKutz.freshKutzId = curr_id;
+            freshKutz.title = title;
+            freshKutz.salon_City = salon;
+            freshKutz.description = description;
+            freshKutz.stylist_name = stylistName;
+            freshKutz.date = DateFormat.getDateTimeInstance().format(new Date());
+            Log.d(TAG, "Date Cut:\t" + freshKutz.date);
+//            freshKutz.coverImage = "NULL ENTITY";
+            freshKutz.coverImage = frontBase64Image;
+            freshKutz.save();
 
+
+//            kutz_id = freshKutz.getId();
+//            Log.d(TAG, "Single active id:\t" + kutz_id);
+//            intent.putExtra("current_id", curr_id);
+//            intent.putExtra("kutz_id", kutz_id);
             startActivity(intent);
+
         } else {
             Log.d(TAG, "Null Check Failure");
-            Snackbar.make(findViewById(android.R.id.content), "Enter Title, Salon Name, Date and Capture At least One Image", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), "Enter All Inputs and Capture All Shots", Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    private void showSnack() {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Enable All Permissions in Settings for the app to work", Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("GRANT", new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent settingsIntent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), "");
-                settingsIntent.setData(uri);
-                startActivityForResult(settingsIntent, 0);
-            }
-        });
-        snackbar.setActionTextColor(Color.GREEN);
-        snackbar.show();
     }
 
     private void startMainActivity() {
 
         Log.d(TAG, "Single id:\t" + freshKutz.getFreshKutzId());
-        if (freshKutz.getFreshKutzId() > 0) {
-            database.deleteKut(freshKutz.getFreshKutzId());
-            Intent mainIntent = new Intent(AddStyleActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-        } else {
-            Intent mainIntent = new Intent(AddStyleActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-        }
+        Log.d(TAG, "Single active id:\t" + freshKutz.getId());
+        Intent mainIntent = new Intent(AddStyleActivity.this, MainActivity.class);
+        startActivity(mainIntent);
 
-//        prefsHelper.deleteStyleTitle();
-//        prefsHelper.deleteSalonName();
-//        prefsHelper.deleteStyleTitle();
-//        prefsHelper.deleteDesc();
-//        prefsHelper.deleteDateCut();
-//
-//        prefsHelper.deleteFrontImage();
-//        prefsHelper.deleteSideImage();
-//        prefsHelper.deleteBackImage();
+        Log.d(TAG, "POST Single id:\t" + freshKutz.getFreshKutzId());
+        Log.d(TAG, "POST Single active id:\t" + freshKutz.getId());
+
     }
 
     private void init() {
@@ -371,7 +327,7 @@ public class AddStyleActivity extends AppCompatActivity {
         cancelTV = findViewById(R.id.cancelTV);
         captionET = findViewById(R.id.captionET);
         salonET = findViewById(R.id.salonET);
-        dateET = findViewById(R.id.dateET);
+        stylist_nameET = findViewById(R.id.stylist_nameET);
         descET = findViewById(R.id.descET);
         frontIV = findViewById(R.id.frontIV);
         backIV = findViewById(R.id.backIV);
@@ -382,17 +338,6 @@ public class AddStyleActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        prefsHelper.deleteStyleTitle();
-        prefsHelper.deleteSalonName();
-        prefsHelper.deleteStyleTitle();
-        prefsHelper.deleteDesc();
-        prefsHelper.deleteDateCut();
-
-        prefsHelper.deleteFrontImage();
-        prefsHelper.deleteSideImage();
-        prefsHelper.deleteBackImage();
-
     }
 
 }

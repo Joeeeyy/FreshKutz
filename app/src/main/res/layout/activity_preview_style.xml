@@ -97,22 +97,28 @@
 
                 <RadioButton
                     android:id="@+id/radioFrontImg"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:minWidth="100dp"
+                    android:layout_height="120dp"
+                    android:minHeight="100dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"/>
 
                 <RadioButton
                     android:id="@+id/radioSideImg"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:minWidth="100dp"
+                    android:layout_height="120dp"
+                    android:minHeight="100dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"/>
 
                 <RadioButton
                     android:id="@+id/radioBackImg"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:minWidth="100dp"
+                    android:layout_height="120dp"
+                    android:minHeight="100dp"
                     android:layout_weight="1"
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="3dp"/>

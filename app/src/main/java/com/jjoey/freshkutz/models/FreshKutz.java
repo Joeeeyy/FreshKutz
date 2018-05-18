@@ -1,25 +1,50 @@
 package com.jjoey.freshkutz.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by JosephJoey on 5/9/2018.
  */
 
-public class FreshKutz {
+@Table(name = "fresh_cuts")
+public class FreshKutz extends Model {
 
-    private int freshKutzId;
-    private String coverImage;
-    private String frontImage;
-    private String sideImage;
-    private String backImage;
-    private String title;
-    private String date;
-    private String salon_City;
-    private String description;
+    @Column(name = "style_id")
+    public String freshKutzId;
+
+    @Column(name = "coverImage")
+    public String coverImage;
+
+    @Column(name = "frontImage")
+    public String frontImage;
+
+    @Column(name = "sideImage")
+    public String sideImage;
+
+    @Column(name = "backImage")
+    public String backImage;
+
+    @Column(name = "title_style")
+    public String title;
+
+    @Column(name = "date")
+    public String date;
+
+    @Column(name = "salonOR_CityName")
+    public String salon_City;
+
+    @Column(name = "desc")
+    public String description;
+
+    @Column(name = "stylist_name")
+    public String stylist_name;
 
     public FreshKutz() {
     }
 
-    public FreshKutz(String coverImage, String frontImage, String sideImage, String backImage, String title, String date, String salon_City, String description) {
+    public FreshKutz(String coverImage, String frontImage, String sideImage, String backImage, String title, String date, String salon_City, String description, String stylist_name) {
         this.coverImage = coverImage;
         this.frontImage = frontImage;
         this.sideImage = sideImage;
@@ -28,9 +53,10 @@ public class FreshKutz {
         this.date = date;
         this.salon_City = salon_City;
         this.description = description;
+        this.stylist_name = stylist_name;
     }
 
-    public FreshKutz(int freshKutzId, String coverImage, String frontImage, String sideImage, String backImage, String title, String date, String salon_City, String description) {
+    public FreshKutz(String freshKutzId, String coverImage, String frontImage, String sideImage, String backImage, String title, String date, String salon_City, String description, String stylist_name) {
         this.freshKutzId = freshKutzId;
         this.coverImage = coverImage;
         this.frontImage = frontImage;
@@ -40,13 +66,14 @@ public class FreshKutz {
         this.date = date;
         this.salon_City = salon_City;
         this.description = description;
+        this.stylist_name = stylist_name;
     }
 
-    public int getFreshKutzId() {
+    public String getFreshKutzId() {
         return freshKutzId;
     }
 
-    public void setFreshKutzId(int freshKutzId) {
+    public void setFreshKutzId(String freshKutzId) {
         this.freshKutzId = freshKutzId;
     }
 
@@ -113,4 +140,13 @@ public class FreshKutz {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getStylist_name() {
+        return stylist_name;
+    }
+
+    public void setStylist_name(String stylist_name) {
+        this.stylist_name = stylist_name;
+    }
+
 }
