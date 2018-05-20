@@ -27,7 +27,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.jjoey.freshkutz.models.FreshKutz;
+import com.jjoey.freshkutz.utils.Constants;
 import com.jjoey.freshkutz.utils.Utils;
 
 import java.text.DateFormat;
@@ -57,7 +61,8 @@ public class AddStyleActivity extends AppCompatActivity {
     private boolean isFrontImg = false, isBackImg = false, isSideImg = false, isGranted = false;
 
     private String curr_id;
-    private long kutz_id;
+
+    private AdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +73,8 @@ public class AddStyleActivity extends AppCompatActivity {
 
         init();
         setSupportActionBar(toolbar);
+
+        initAds();
 
         freshKutz = new FreshKutz();
 
@@ -127,6 +134,12 @@ public class AddStyleActivity extends AppCompatActivity {
             startPreviewActivity();
         });
 
+    }
+
+    private void initAds() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adRequest);
     }
 
     private void checkPerms() {
@@ -333,6 +346,7 @@ public class AddStyleActivity extends AppCompatActivity {
         backIV = findViewById(R.id.backIV);
         sideIV = findViewById(R.id.sideIV);
         continueBtn = findViewById(R.id.continueBtn);
+        adView = findViewById(R.id.adView);
     }
 
     @Override

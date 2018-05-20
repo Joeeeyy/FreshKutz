@@ -266,14 +266,11 @@ public class EditActivity extends AppCompatActivity {
 
     private void validate() {
         title = edit_style_titleET.getText().toString();
-        Log.d(TAG, "Curr title:\t" + title);
         desc = edit_style_descET.getText().toString();
         stylist_name = edit_stylist_nameET.getText().toString();
         salon = edit_style_salonET.getText().toString();
 
-//        if (!TextUtils.isEmpty(title) && !TextUtils.isEmpty(desc) && !TextUtils.isEmpty(stylist_name) && !TextUtils.isEmpty(salon) && !TextUtils.isEmpty(frontImg) && !TextUtils.isEmpty(sideImg) && !TextUtils.isEmpty(backImg)) {
         if (title != "" && desc != "" && stylist_name != "" && salon != "" && frontImg != "" && sideImg != "" && backImg != ""){
-            Log.d(TAG, "Curr title:\t" + title);
             saveNewDetails(title, desc, stylist_name, salon, frontImg, sideImg, backImg);
         } else {
             Snackbar.make(findViewById(android.R.id.content), "Please Enter all Fields Correctly", Snackbar.LENGTH_LONG).show();
@@ -297,28 +294,21 @@ public class EditActivity extends AppCompatActivity {
             singleKut.date = DateFormat.getDateTimeInstance().format(new Date());
             if (frontImg == null){
                 singleKut.frontImage = oldFrontImg;
-                Log.d(TAG, "Old Front Image:\t" + oldFrontImg);
             } else {
                 singleKut.frontImage = frontImg;
-                Log.d(TAG, "New Front Image:\t" + frontImg);
             }
             if (sideImg == null){
                 singleKut.sideImage = oldSideImg;
-                Log.d(TAG, "Old Side Image:\t" + oldSideImg);
             } else {
                 singleKut.sideImage = sideImg;
-                Log.d(TAG, "New Side Image:\t" + sideImg);
             }
             if (backImg== null){
                 singleKut.backImage = oldBackImg;
-                Log.d(TAG, "old Back Image:\t" + oldBackImg);
             } else {
                 singleKut.backImage = backImg;
-                Log.d(TAG, "New Back Image:\t" + backImg);
             }
 
             singleKut.save();
-
             startActivity(editIntent);
 
         }

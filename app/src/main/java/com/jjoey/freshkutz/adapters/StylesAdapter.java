@@ -26,6 +26,8 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesViewHolder> {
     private final Context context;
     private List<FreshKutz> itemsList;
 
+    private long kutz_id;
+
     public StylesAdapter(Context context, List<FreshKutz> itemsList) {
         this.context = context;
         this.itemsList = itemsList;
@@ -41,6 +43,10 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesViewHolder> {
     public void onBindViewHolder(StylesViewHolder viewholder, int position) {
         FreshKutz kutz = itemsList.get(position);
 
+        kutz_id = kutz.getId();
+        Log.d(TAG, "Id from Position:\t" + kutz_id);
+        Log.d(TAG, "Kutz-Id from Position:\t" + kutz.freshKutzId);
+
         viewholder.froshTitle.setText(kutz.title);
         viewholder.froshLocation.setText(kutz.getSalon_City());
         viewholder.froshDate.setText(kutz.getDate());
@@ -52,6 +58,13 @@ public class StylesAdapter extends RecyclerView.Adapter<StylesViewHolder> {
             context.startActivity(viewIntent);
         });
 
+    }
+
+    public void removeAtPosition(int position, long id){
+        FreshKutz.delete(FreshKutz.class, id);
+        itemsList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, itemsList.size());
     }
 
     @Override

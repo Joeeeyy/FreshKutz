@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.jjoey.freshkutz.R;
+import com.jjoey.freshkutz.utils.TouchZoomImageView;
 
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class ImageSlideAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         View sliderLayout = inflater.inflate(R.layout.item_gallery_layout, container, false);
         ImageView imageSliderIV = sliderLayout.findViewById(R.id.imageSliderIV);
+        //TouchZoomImageView imageSliderIV = sliderLayout.findViewById(R.id.imageSliderIV);
         imageSliderIV.setImageBitmap(bitmapList.get(position));
         container.addView(sliderLayout, 0);
         return sliderLayout;

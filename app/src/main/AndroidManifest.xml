@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jjoey.freshkutz">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <uses-feature android:name="android.hardware.camera2" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.camera2"
+        android:required="true" />
 
     <application
         android:name=".extras.FreshApp"
@@ -21,21 +25,35 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="101" />
-        <!--<meta-data-->
-            <!--android:name="AA_MODELS"-->
-            <!--android:value="com.jjoey.freshkutz.models.FreshKutz" />-->
-        <activity android:name=".SplashActivity">
+
+        <activity android:name=".IntroSliderActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SplashActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".AddStyleActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".PreviewStyleActivity" android:parentActivityName=".AddStyleActivity"/>
-        <activity android:name=".FullDetailsActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".EditActivity" android:parentActivityName=".FullDetailsActivity"></activity>
+        <activity
+            android:name=".AddStyleActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".PreviewStyleActivity"
+            android:parentActivityName=".AddStyleActivity" />
+        <activity
+            android:name=".FullDetailsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".EditActivity"
+            android:parentActivityName=".FullDetailsActivity" />
+        <activity android:name=".HelpActivity"></activity>
     </application>
 
 </manifest>

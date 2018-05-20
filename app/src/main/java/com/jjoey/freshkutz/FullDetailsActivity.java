@@ -1,5 +1,6 @@
 package com.jjoey.freshkutz;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.jjoey.freshkutz.fragments.GalleryFragment;
 import com.jjoey.freshkutz.models.FreshKutz;
+import com.jjoey.freshkutz.utils.Constants;
+import com.jjoey.freshkutz.utils.TouchZoomImageView;
 import com.jjoey.freshkutz.utils.Utils;
 
 public class FullDetailsActivity extends AppCompatActivity {
@@ -29,6 +35,8 @@ public class FullDetailsActivity extends AppCompatActivity {
     private String backImageBitmapString;
     private int isFrontClicked = 0, isSideClicked = 1, isBackClicked = 2;
 
+    private InterstitialAd ad;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,11 +48,10 @@ public class FullDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         if (kutz_id != null){
-            Log.d(TAG, "Kutz id is:\t" + kutz_id);
             fetchSingleKutz(kutz_id);
             disableInputs();
         } else {
-            Log.d(TAG, "Kutz id is:\t" + kutz_id);
+            Log.d(TAG, "Kutz id is NULL:\t" + kutz_id);
         }
 
         backImg.setOnClickListener( v -> {
@@ -57,6 +64,14 @@ public class FullDetailsActivity extends AppCompatActivity {
             startActivity(editIntent);
         });
 
+        initAds();
+
+    }
+
+    private void initAds() {
+        ad = new InterstitialAd(this);
+        ad.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        ad.loadAd(new AdRequest.Builder().build());
     }
 
     private void disableInputs() {
@@ -84,8 +99,6 @@ public class FullDetailsActivity extends AppCompatActivity {
         detail_stylist_nameET.setText(singleKut.stylist_name);
         detail_style_salonET.setText(singleKut.salon_City);
 
-        Log.d(TAG, "image:\t" + singleKut.frontImage);
-
         frontBitmapString = singleKut.frontImage;
         sideBitmapString = singleKut.sideImage;
         backImageBitmapString = singleKut.backImage;
@@ -95,29 +108,24 @@ public class FullDetailsActivity extends AppCompatActivity {
         details_sideIV.setImageBitmap(Utils.base64StringToBitmap(sideBitmapString));
 
         details_frontIV.setOnClickListener( v -> {
+            if (ad.isLoaded()) {
+                ad.show();
+            }
             startGalleryFragment(frontBitmapString, backImageBitmapString, sideBitmapString, isFrontClicked);
         });
 
         details_backIV.setOnClickListener( v -> {
+            if (ad.isLoaded()) {
+                ad.show();
+            }
             startGalleryFragment(frontBitmapString, backImageBitmapString, sideBitmapString, isBackClicked);
-//            GalleryFragment galleryFragment = new GalleryFragment();
-//            Bundle bitmaps = new Bundle();
-//            bitmaps.putString("bitmap_front", frontBitmapString);
-//            bitmaps.putString("bitmap_back", backImageBitmapString);
-//            bitmaps.putString("bitmap_side", sideBitmapString);
-//            galleryFragment.setArguments(bitmaps);
-//            galleryFragment.show(getFragmentManager(), "GalleryFragment");
         });
 
         details_sideIV.setOnClickListener( v -> {
+            if (ad.isLoaded()) {
+                ad.show();
+            }
             startGalleryFragment(frontBitmapString, backImageBitmapString, sideBitmapString, isSideClicked);
-//            GalleryFragment galleryFragment = new GalleryFragment();
-//            Bundle bitmaps = new Bundle();
-//            bitmaps.putString("bitmap_front", frontBitmapString);
-//            bitmaps.putString("bitmap_back", backImageBitmapString);
-//            bitmaps.putString("bitmap_side", sideBitmapString);
-//            galleryFragment.setArguments(bitmaps);
-//            galleryFragment.show(getFragmentManager(), "GalleryFragment");
         });
 
     }
@@ -129,8 +137,8 @@ public class FullDetailsActivity extends AppCompatActivity {
         bitmaps.putString("bitmap_back", backImageBitmapString);
         bitmaps.putString("bitmap_side", sideBitmapString);
         bitmaps.putInt("clicked_position", positionClicked);
-        Log.d(TAG, "Clicked at:\t" + positionClicked);
         galleryFragment.setArguments(bitmaps);
+        galleryFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
         galleryFragment.show(getFragmentManager(), "GalleryFragment");
     }
 

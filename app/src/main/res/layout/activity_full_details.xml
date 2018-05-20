@@ -131,7 +131,7 @@
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:background="@drawable/border_image_bkg"
-                                android:src="@drawable/ic_hair_tools"
+                                android:src="@drawable/hair_front_two"
                                 android:scaleType="centerCrop"/>
 
                             <TextView
@@ -158,7 +158,7 @@
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
                                 android:background="@drawable/border_image_bkg"
-                                android:src="@drawable/ic_hair_tools"
+                                android:src="@drawable/side_hair_icon"
                                 android:scaleType="centerCrop"/>
 
                             <TextView

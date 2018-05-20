@@ -33,4 +33,16 @@ public class Utils {
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
     }
 
+    public static byte[] bitmapToArray(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] output = baos.toByteArray();
+        return output;
+    }
+
+    public static Bitmap byteArraytoBitmap(byte[] input) {
+        Bitmap bitmap = BitmapFactory.decodeByteArray(input, 0, input.length);
+        return bitmap;
+    }
+
 }

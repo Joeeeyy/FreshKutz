@@ -4,7 +4,8 @@
     <string name="hair_cut_date">Date of Haircut</string>
     <string name="salon_city">Salon + City</string>
     <string name="cancel">Cancel</string>
-    <string name="stageTV">Create Haircut | 1 of 2</string>
+    <string name="stageTV">Create Haircut</string>
+    <!--<string name="stageTV">Create Haircut | 1 of 2</string>-->
     <string name="ask_stylist">Ask your STYLIST nicely to fill this page out</string>
     <string name="style_name_hint">Hair Style Name</string>
     <string name="headshots_hint">Take Headshots</string>
@@ -31,4 +32,15 @@
     <string name="details_salon_city">Salon Name</string>
     <string name="edit_txt">Edit Mode</string>
     <string name="cancel_edit_txt">Cancel</string>
+    <string name="test_banner_ad_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="app_banner_ad_id">ca-app-pub-6032968670949504/2635775626</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="done">DONE</string>
+    <string name="slide_1_title">Are You a Hair Freak?</string>
+    <string name="slide_1_desc">An App to Save Your Trendiness, For Your Next Salon Visit? Click Next</string>
+    <string name="slide_2_title">Do You Want Consistency in Appearance?</string>
+    <string name="slide_2_desc">Upload Photos of Your New Haircut and Save \'Em...Easy!!</string>
+    <string name="slide_3_title">Boost Self-Satisfaction</string>
+    <string name="slide_3_desc">Boost Your Confidence Levels. A Good Hair Style Scores You More Than a Date.</string>
 </resources>
