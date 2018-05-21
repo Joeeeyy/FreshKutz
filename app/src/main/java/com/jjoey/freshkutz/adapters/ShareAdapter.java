@@ -34,7 +34,8 @@ public class ShareAdapter extends RecyclerView.Adapter<ShareViewHolder> {
     @Override
     public void onBindViewHolder(ShareViewHolder viewholder, int position) {
         ShareOptions options = itemsList.get(position);
-
+        viewholder.iconImg.setImageResource(options.getIcon());
+        viewholder.titleTxt.setText(options.getText());
     }
 
     @Override

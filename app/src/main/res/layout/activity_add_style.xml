@@ -155,7 +155,8 @@
                         android:textColor="@color/gray"
                         android:textSize="16sp"
                         android:hint="@string/details_stylist_name"
-                        android:inputType="textShortMessage|text|text|textMultiLine"
+                        android:inputType="text"
+                        android:maxLines="1"
                         android:layout_marginRight="10dp"
                         android:layout_marginTop="5dp" />
 

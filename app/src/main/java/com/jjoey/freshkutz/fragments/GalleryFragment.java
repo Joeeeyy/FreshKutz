@@ -9,16 +9,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.jjoey.freshkutz.R;
 import com.jjoey.freshkutz.adapters.ImageSlideAdapter;
 import com.jjoey.freshkutz.utils.Utils;
@@ -49,7 +46,7 @@ import java.util.List;
  * Created by JosephJoey on 5/18/2018.
  */
 
-public class GalleryFragment extends DialogFragment {
+public class GalleryFragment extends android.support.v4.app.DialogFragment {
 
     private static final String TAG = GalleryFragment.class.getSimpleName();
 
@@ -136,6 +133,12 @@ public class GalleryFragment extends DialogFragment {
         });
 
         checkPerms();
+
+        shareFAB.setOnClickListener((View v) -> {
+            ShareBottomSheet bottomSheet = new ShareBottomSheet();
+            FragmentManager fragmentManager = getFragmentManager();
+            bottomSheet.show(fragmentManager, bottomSheet.getTag());
+        });
 
         saveFAB.setOnClickListener(v -> {
             switch (viewPager.getCurrentItem()) {

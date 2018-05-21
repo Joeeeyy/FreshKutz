@@ -47,18 +47,18 @@ public class FullDetailsActivity extends AppCompatActivity {
         init();
         setSupportActionBar(toolbar);
 
-        if (kutz_id != null){
+        if (kutz_id != null) {
             fetchSingleKutz(kutz_id);
             disableInputs();
         } else {
             Log.d(TAG, "Kutz id is NULL:\t" + kutz_id);
         }
 
-        backImg.setOnClickListener( v -> {
+        backImg.setOnClickListener(v -> {
             startActivity(new Intent(FullDetailsActivity.this, MainActivity.class));
         });
 
-        editTV.setOnClickListener( v -> {
+        editTV.setOnClickListener(v -> {
             Intent editIntent = new Intent(FullDetailsActivity.this, EditActivity.class);
             editIntent.putExtra("style_id", kutz_id);
             startActivity(editIntent);
@@ -107,21 +107,21 @@ public class FullDetailsActivity extends AppCompatActivity {
         details_backIV.setImageBitmap(Utils.base64StringToBitmap(backImageBitmapString));
         details_sideIV.setImageBitmap(Utils.base64StringToBitmap(sideBitmapString));
 
-        details_frontIV.setOnClickListener( v -> {
+        details_frontIV.setOnClickListener(v -> {
             if (ad.isLoaded()) {
                 ad.show();
             }
             startGalleryFragment(frontBitmapString, backImageBitmapString, sideBitmapString, isFrontClicked);
         });
 
-        details_backIV.setOnClickListener( v -> {
+        details_backIV.setOnClickListener(v -> {
             if (ad.isLoaded()) {
                 ad.show();
             }
             startGalleryFragment(frontBitmapString, backImageBitmapString, sideBitmapString, isBackClicked);
         });
 
-        details_sideIV.setOnClickListener( v -> {
+        details_sideIV.setOnClickListener(v -> {
             if (ad.isLoaded()) {
                 ad.show();
             }
@@ -139,7 +139,7 @@ public class FullDetailsActivity extends AppCompatActivity {
         bitmaps.putInt("clicked_position", positionClicked);
         galleryFragment.setArguments(bitmaps);
         galleryFragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
-        galleryFragment.show(getFragmentManager(), "GalleryFragment");
+        galleryFragment.show(getSupportFragmentManager(), "GalleryFragment");
     }
 
     private void init() {
